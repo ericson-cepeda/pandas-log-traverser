@@ -1,0 +1,9 @@
+version: '3.3'
+services:
+  soc-rest:
+    image: auvik/service:dev
+    build: .
+    env_file:
+     - ./.env-dev
+    ports:
+     - "8080:80"

@@ -1,0 +1,225 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "Access log traverser",
+      "version": "1.0.0",
+      "title": "Log Traverser",
+      "contact": {
+        "email": "ericson.cepeda@gmail.com"
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      }
+    },
+    "host": "localhost:8080",
+    "basePath": "/v1",
+    "tags": [
+      {
+        "name": "app",
+        "description": "Access to logs"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/log/findBy/{attrType}/limit/{limit}": {
+        "get": {
+          "tags": [
+            "findByStatus"
+          ],
+          "summary": "Finds Logs by status",
+          "description": "Request status code",
+          "operationId": "findLogsByCode",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "val",
+              "in": "query",
+              "description": "Status value that need to be considered for filter",
+              "required": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "200",
+                  "400",
+                  "502",
+                  "500"
+                ],
+                "default": "200"
+              },
+              "collectionFormat": "multi"
+            },
+            {
+              "name": "attrType",
+              "in": "path",
+              "description": "Column value to be considered for filter",
+              "required": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "status"
+                ],
+                "default": "status"
+              },
+              "collectionFormat": "multi"
+            },
+            {
+              "name": "limit",
+              "in": "path",
+              "description": "Limit value to be considered for filter",
+              "required": true,
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "enum": [
+                  10
+                ],
+                "default": 10
+              },
+              "collectionFormat": "multi"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Log"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid status value"
+            }
+          }
+        }
+      },
+      "/log/findBy/host/group/{attrCol}": {
+        "get": {
+          "tags": [
+            "findPathsByHost"
+          ],
+          "summary": "Finds Logs by host",
+          "description": "Single hostname",
+          "operationId": "findLogsByHost",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "val",
+              "in": "query",
+              "description": "Value to be considered for filter",
+              "required": true,
+              "type": "string",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "wpbfl2-45.gate.net"
+                ],
+                "default": "wpbfl2-45.gate.net"
+              },
+              "collectionFormat": "multi"
+            },
+            {
+              "name": "attrCol",
+              "in": "path",
+              "description": "Column to be considered for filter",
+              "required": true,
+              "type": "string",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "path"
+                ],
+                "default": "path"
+              },
+              "collectionFormat": "multi"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/GroupResponse"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid status value"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Log": {
+        "type": "object",
+        "properties":  {
+            "host": {
+              "type": "string"
+            },
+            "time": {
+              "type": "string"
+            },
+            "request": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "size": {
+              "type": "string"
+            }
+          },
+        "xml": {
+          "name": "Log"
+        }
+      
+      },
+      "GroupResponse": {
+        "type": "object",
+        "properties": {
+          "host": {
+            "type": "array"
+          }
+        }
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "host": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          },
+          "request": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "externalDocs": {
+      "description": "Find out more about Swagger",
+      "url": "http://swagger.io"
+    }
+  }

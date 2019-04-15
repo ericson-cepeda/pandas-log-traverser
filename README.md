@@ -1,5 +1,8 @@
 # Generic Service
 
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=ericson-cepeda_pandas-log-traverser&metric=alert_status)](https://sonarcloud.io/dashboard?id=ericson-cepeda_pandas-log-traverser)
+
+
 ## Deployment
 
 Application tier API deployment using docker-compose.
